@@ -21,6 +21,7 @@
 	"permissions": [
 		"windows",
 		"tabs",
+		"contextMenus",
 		"http://*/*",
 		"https://*/*"
 	],
