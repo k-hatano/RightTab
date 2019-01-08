@@ -27,6 +27,18 @@ chrome.contextMenus.onClicked.addListener(function(item){
 		chrome.tabs.create({}, function(e){});
 		return;
 	}
+	if (item.menuItemId == 'topOfThisPage') {
+		chrome.tabs.getSelected(null, function(tab){
+    		chrome.tabs.executeScript(tab.id, {code: "window.scrollTo(0,0);"}, function(response){});
+		});
+		return;
+	}
+	if (item.menuItemId == 'bottomOfThisPage') {
+		chrome.tabs.getSelected(null, function(tab){
+    		chrome.tabs.executeScript(tab.id, {code: "window.scrollTo(0,document.body.scrollHeight);"}, function(response){});
+		});
+		return;
+	}
 	chrome.windows.getCurrent(null, function(currentWindow){
 		chrome.tabs.getAllInWindow(window.id, function(tabs){
 			var tabsCount = tabs.length;
@@ -97,7 +109,7 @@ chrome.contextMenus.create({
 	title: "Separator",
 	contexts: ["all"],
 	parentId: "parent",
-	id: "separator"
+	id: "separator1"
 });
 
 chrome.contextMenus.create({
@@ -107,3 +119,24 @@ chrome.contextMenus.create({
 	id: "newTab"
 });
 
+chrome.contextMenus.create({
+	type: "separator",
+	title: "Separator",
+	contexts: ["all"],
+	parentId: "parent",
+	id: "separator2"
+});
+
+chrome.contextMenus.create({
+	title: "Top of This Page",
+	contexts: ["all"],
+	parentId: "parent",
+	id: "topOfThisPage"
+});
+
+chrome.contextMenus.create({
+	title: "Bottom of This Page",
+	contexts: ["all"],
+	parentId: "parent",
+	id: "bottomOfThisPage"
+});
